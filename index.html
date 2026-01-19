@@ -1,0 +1,303 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Shubham Amritkar | Portfolio</title>
+    <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&family=VT323&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            /* Theme Colors - Feel free to change these! */
+            --bg-color: #2D232E;
+            --text-color: #E0E0CE;
+            --primary: #FFADAD;
+            --secondary: #A0C4FF;
+            --accent: #FDFFB6;
+            --box-bg: #4A3B4E;
+            --scanline-opacity: 0.15;
+        }
+
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+
+        body {
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            font-family: 'VT323', monospace;
+            font-size: 1.2rem;
+            overflow-x: hidden;
+            position: relative;
+        }
+
+        h1, h2, h3, .pixel-btn, button, .nav-links a, .logo {
+            font-family: 'Press Start 2P', cursive;
+            text-transform: uppercase;
+        }
+
+        /* --- CRT Effect --- */
+        .scanlines {
+            position: fixed; top: 0; left: 0; width: 100vw; height: 100vh;
+            background: linear-gradient(to bottom, rgba(255,255,255,0), rgba(255,255,255,0) 50%, rgba(0,0,0,0.2) 50%, rgba(0,0,0,0.2));
+            background-size: 100% 4px; pointer-events: none; z-index: 999;
+            opacity: var(--scanline-opacity); animation: flicker 0.15s infinite;
+        }
+
+        /* --- Nav --- */
+        nav {
+            display: flex; justify-content: space-between; align-items: center;
+            padding: 2rem; max-width: 1200px; margin: 0 auto;
+        }
+        .logo { font-size: 1.2rem; color: var(--primary); text-shadow: 2px 2px 0px #000; }
+        .nav-links a {
+            color: var(--text-color); text-decoration: none; margin-left: 2rem;
+            font-size: 0.7rem; position: relative; transition: color 0.3s;
+        }
+        .nav-links a:hover { color: var(--accent); }
+        .nav-links a:hover::before {
+            content: '►'; position: absolute; left: -15px;
+            color: var(--accent); animation: blink 1s infinite;
+        }
+
+        /* --- Hero --- */
+        .hero {
+            min-height: 85vh; display: flex; flex-direction: column;
+            justify-content: center; align-items: center; text-align: center;
+            padding: 2rem 1rem;
+            background: radial-gradient(circle at center, #4A3B4E 0%, var(--bg-color) 70%);
+        }
+        
+        /* CUSTOMIZED CSS FOR YOUR AVATAR */
+        .pixel-avatar {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            width: 100%;
+            margin-bottom: 2rem;
+        }
+        
+        .pixel-avatar img {
+            height: 195px; /* Passport size height */
+            width: 150px; /* Passport size width */
+            border: 4px solid var(--text-color); /* The retro border */
+            box-shadow: 8px 8px 0px #000; /* The retro shadow block */
+            object-fit: cover; /* Ensures image fills the space properly */
+            /* Optional: Makes the photo look slightly pixelated to match the theme */
+            /* image-rendering: pixelated; */ 
+        }
+
+        .hero h1 { font-size: 2.5rem; margin-bottom: 1.5rem; line-height: 1.4; text-shadow: 4px 4px 0px #000; }
+        .hero p { font-size: 1.5rem; max-width: 600px; margin-bottom: 3rem; color: var(--secondary); }
+
+        /* --- Buttons --- */
+        .pixel-btn {
+            background-color: var(--secondary); color: #000; border: 4px solid #fff;
+            padding: 1rem 2rem; font-size: 0.8rem; cursor: pointer;
+            box-shadow: 6px 6px 0px #000; text-decoration: none; display: inline-block;
+            transition: transform 0.1s, box-shadow 0.1s;
+        }
+        .pixel-btn:active { transform: translate(4px, 4px); box-shadow: 2px 2px 0px #000; }
+
+        /* --- Projects (Static Version for easy use) --- */
+        .projects { max-width: 1200px; margin: 4rem auto; padding: 0 2rem; }
+        .section-title {
+            font-size: 1.5rem; margin-bottom: 3rem; text-align: center;
+            border-bottom: 4px solid var(--primary); display: inline-block; padding-bottom: 1rem;
+        }
+        .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 3rem; }
+        
+        .card {
+            background-color: var(--box-bg); border: 4px solid var(--text-color);
+            padding: 1.5rem; position: relative; box-shadow: 8px 8px 0px #000;
+            transition: transform 0.2s; cursor: pointer;
+        }
+        .card:hover { transform: translateY(-5px); }
+        .card-img {
+            width: 100%; height: 150px; background-color: #000; margin-bottom: 1rem;
+            border: 2px solid var(--text-color); display: flex;
+            align-items: center; justify-content: center; color: #555;
+            font-family: 'Press Start 2P'; font-size: 0.8rem;
+        }
+        .card h3 { font-size: 1rem; margin-bottom: 0.5rem; color: var(--accent); }
+        .tags { margin-top: 1rem; display: flex; gap: 0.5rem; flex-wrap: wrap; }
+        .tag {
+            font-size: 0.8rem; background: #000; color: var(--primary);
+            padding: 0.2rem 0.5rem; border: 1px solid var(--primary);
+            font-family: 'Press Start 2P';
+        }
+
+        /* --- Contact Section --- */
+        .contact-section {
+            max-width: 1200px; margin: 4rem auto; padding: 0 2rem; text-align: center;
+        }
+        .about-section {
+            max-width: 1200px; margin: 4rem auto; padding: 0 2rem; text-align: center;
+        }
+        .social-links {
+            display: flex; justify-content: center; gap: 2rem; flex-wrap: wrap; margin-top: 3rem;
+        }
+        .social-link {
+            background-color: var(--secondary); color: #000; border: 4px solid #fff;
+            padding: 1rem 2rem; font-size: 0.8rem; cursor: pointer;
+            box-shadow: 6px 6px 0px #000; text-decoration: none; display: inline-block;
+            transition: transform 0.1s, box-shadow 0.1s; font-family: 'Press Start 2P';
+        }
+        .social-link:hover { background-color: var(--accent); }
+        .social-link:active { transform: translate(4px, 4px); box-shadow: 2px 2px 0px #000; }
+
+        /* --- Footer --- */
+        footer { text-align: center; padding: 4rem 0; font-size: 1rem; opacity: 0.7; }
+
+        @keyframes flicker { 0% { opacity: 0.15; } 50% { opacity: 0.1; } 100% { opacity: 0.15; } }
+        @keyframes blink { 0% { opacity: 0; } 50% { opacity: 1; } 100% { opacity: 0; } }
+
+        @media (max-width: 768px) {
+            .hero h1 { font-size: 1.8rem; }
+            nav { flex-direction: column; gap: 1rem; }
+            .nav-links a { margin: 0 1rem; }
+            .pixel-avatar { height: 150px; }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="scanlines"></div>
+
+    <nav>
+        <div class="logo">SHUBHAM AMRITKAR</div>
+        <div class="nav-links">
+            <a href="#work">QUESTS</a>
+            <a href="#about">ABOUT</a>
+            <a href="#contact">CONTACT</a>
+            </div>
+    </nav>
+
+    <section class="hero">
+        <div class="pixel-avatar">
+            <img src="Gemini_Generated_Image_fgr8hlfgr8hlfgr8.png">
+        </div>
+        <h1>LEVEL UP YOUR<br>DIGITAL EXPERIENCE</h1>
+        <p>Hi, I'm Shubham Amritkar. A Creative Developer crafting pixel-perfect worlds.</p>
+        <a href="#about" class="pixel-btn">START GAME</a>
+    </section>
+
+    <section id="about" class="about-section">
+        <h2 class="section-title">ABOUT ME</h2>
+        <div style="max-width:800px; margin: 2rem auto; text-align:left;">
+            <p><strong>Shubham Amritkar</strong> is a passionate and creative developer hailing from India. With a keen eye for design and a love for coding, I have been crafting digital experiences that captivate and engage users.</p>
+            <p><strong>20yo</strong></p>
+            <p><strong>Skills:</strong></p>
+            <div class="tags" style="justify-content:flex-start;">
+                <span class="tag">Graphics Designing</span>
+                <span class="tag">Video Editing</span>
+                <span class="tag">HTML</span>
+                <span class="tag">CSS</span>
+                <span class="tag">C programming</span>
+            </div>
+
+            <hr style="margin:1.5rem 0; border:none; border-top:2px solid rgba(255,255,255,0.06);">
+
+            <p style="margin-top:1rem;"><strong>Languages (Proficiency):</strong></p>
+            <div class="tags" style="justify-content:flex-start;">
+                <span class="tag">English</span>
+                <span class="tag">Hindi</span>
+                <span class="tag">Marathi</span>
+                <span class="tag">Japanese</span>
+            </div>
+
+            <p style="margin-top:1rem;"><strong>Software / Tools:</strong></p>
+            <div class="tags" style="justify-content:flex-start;">
+                <span class="tag">Adobe Photoshop</span>
+                <span class="tag">Adobe Premiere Pro</span>
+                <span class="tag">Adobe After Effects</span>
+                <span class="tag">Blender</span>
+            </div>
+        </div>
+    </section>
+
+    <section id="work" class="projects">
+        <div style="text-align: center;">
+            <h2 class="section-title">QUEST LOG</h2>
+        </div>
+        
+        <div class="grid" id="quest-grid">
+            <p class="loading-text">LOADING SAVE FILE...</p>
+        </div>
+    </section>
+
+    <section id="contact" class="contact-section">
+        <h2 class="section-title">CONNECT WITH ME</h2>
+        <div class="social-links">
+            <a href="https://github.com/amritkarShubham" target="_blank" class="social-link">GITHUB</a>
+            <a href="https://www.instagram.com/amritkar_shubham10?igsh=MWUwbmYxd2Y5aHZucw==" target="_blank" class="social-link">INSTAGRAM</a>
+            <a href="https://www.linkedin.com/in/shubham-amritkar-744b173a6/" target="_blank" class="social-link">LINKEDIN</a>
+            <a href="https://discord.gg/sHSbPShV" target="_blank" class="social-link">DISCORD</a>
+            <a href="mailto:amritkars78@gmail.com" class="social-link">EMAIL</a>
+        </div>
+    </section>
+
+    <footer>
+        <p>© 2026 SHUBHAM AMRITKAR. ALL RIGHTS RESERVED.</p>
+        <p style="margin-top: 10px; font-size: 0.8rem;">PRESS ANY KEY TO CONTINUE...</p>
+    </footer>
+
+    <script>
+        // THIS SECTION IS FOR THE OPTIONAL BACKEND
+        // If you are just using the HTML file locally, this part won't load projects, 
+        // but the rest of the site will look correct.
+        async function loadQuests() {
+            const grid = document.getElementById('quest-grid');
+            try {
+                // This tries to connect to a backend server (like the Node.js one previously discussed)
+// We are manually putting the JSON here instead of fetching it
+const quests = [
+  {
+    "id": 1,
+    "title": "Farmer Advisory ChatBot",
+    "description": "A React-based ChatBot that provides agricultural advice to farmers.",
+    "tags": ["REACT", "CSS"],
+    "image": "<img src='Gemini_Generated_Image_eo29epeo29epeo29.png' style='width: 100%; height: 100%; object-fit: cover;'>",
+    "link": "https://github.com/amritkarShubham/AgriAssistant-f-"
+  },
+  {
+    "id": 2,
+    "title": "LPG Gas Leakage Detector",
+    "description": "A hardware-based system to detect LPG gas leaks using sensors and alert users.",
+    "tags": ["C++", "Arduino IDE"],
+    "image": "<img src='Gemini_Generated_Image_eoln6yeoln6yeoln.png' style='width: 100%; height: 100%; object-fit: cover;'>",
+    "link": "https://github.com/amritkarShubham/LPG-Gas-Leakage-Detector"
+  }
+];
+                grid.innerHTML = '';
+                quests.forEach(quest => {
+                    const card = document.createElement('div');
+                    card.className = 'card';
+                    const tagsHtml = quest.tags.map(tag => `<span class="tag">${tag}</span>`).join('');
+                    card.innerHTML = `
+                        <div class="card-img">${quest.image}</div>
+                        <h3>${quest.title}</h3>
+                        <p>${quest.description}</p>
+                        <div class="tags">${tagsHtml}</div>
+                    `;
+                    card.addEventListener('click', () => {
+                        window.open(quest.link, '_blank');
+                    });
+                    grid.appendChild(card);
+                });
+            } catch (error) {
+                console.error("Error:", error);
+                // Default message if no backend is running
+                grid.innerHTML = '<p style="text-align:center; color: #FFADAD;">NO BACKEND DETECTED.<br>(Projects load from server)</p>';
+            }
+        }
+
+        const contactForm = document.getElementById('contact-form');
+        if(contactForm) {
+            contactForm.addEventListener('submit', async (e) => {
+                e.preventDefault();
+                alert("Backend connection required to send messages.");
+            });
+        }
+
+        window.onload = loadQuests;
+    </script>
+</body>
+</html>
