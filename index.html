@@ -272,34 +272,19 @@
 
         /* --- MUSIC PLAYER --- */
         #music-toggle {
-            position: fixed;
-            bottom: 2rem;
-            right: 2rem;
-            background-color: var(--primary);
-            border: 3px solid #fff;
-            padding: 0.8rem 1rem;
+            background: none;
+            border: none;
             cursor: pointer;
-            box-shadow: 4px 4px 0px #000;
-            font-family: 'Press Start 2P';
-            font-size: 0.6rem;
-            color: #000;
-            z-index: 100;
-            transition: all 0.2s;
+            font-size: 1rem;
+            color: var(--primary);
+            transition: color 0.3s;
+            padding: 0;
+            margin-left: 1rem;
         }
 
         #music-toggle:hover {
-            background-color: var(--accent);
-            transform: translateY(-2px);
-            box-shadow: 6px 6px 0px #000;
-        }
-
-        #music-toggle:active {
-            transform: translate(2px, 2px);
-            box-shadow: 1px 1px 0px #000;
-        }
-
-        #music-toggle.playing {
-            background-color: var(--secondary);
+            color: var(--accent);
+            text-shadow: 0 0 8px rgba(253, 255, 182, 0.5);
         }
 
         @keyframes glow { 0%, 100% { text-shadow: 2px 2px 0px #000, 0 0 5px var(--accent); } 50% { text-shadow: 2px 2px 0px #000, 0 0 15px var(--accent); } }
@@ -357,7 +342,6 @@
     <audio id="bgm-player" loop preload="auto" muted>
         <source src="bgm.mp3" type="audio/mpeg">
     </audio>
-    <button id="music-toggle">🔊 MUSIC</button>
 
     <nav>
         <div class="logo">SHUBHAM AMRITKAR</div>
@@ -366,6 +350,7 @@
             <a href="#game">GAME</a>
             <a href="#about">ABOUT</a>
             <a href="#contact">CONTACT</a>
+            <button id="music-toggle" style="background: none; border: none; cursor: pointer; padding: 0; font-size: 1rem; color: var(--primary); transition: color 0.3s;">🔊</button>
             </div>
     </nav>
 
@@ -777,21 +762,20 @@ const quests = [
         document.addEventListener('keydown', unmuteMusic);
         document.addEventListener('touchstart', unmuteMusic);
 
-        musicToggle.addEventListener('click', () => {
+        musicToggle.addEventListener('click', (e) => {
+            e.preventDefault();
+            e.stopPropagation();
             if (isMusicPlaying) {
                 bgmPlayer.pause();
                 bgmPlayer.muted = true;
-                musicToggle.textContent = '🔇 MUSIC';
-                musicToggle.classList.remove('playing');
+                musicToggle.textContent = '🔇';
                 isMusicPlaying = false;
             } else {
                 bgmPlayer.muted = false;
                 bgmPlayer.play().catch(err => {
                     console.error('Audio playback failed:', err);
-                    musicToggle.textContent = '❌ NO AUDIO';
                 });
-                musicToggle.textContent = '🔊 MUSIC';
-                musicToggle.classList.add('playing');
+                musicToggle.textContent = '🔊';
                 isMusicPlaying = true;
             }
         });
@@ -811,7 +795,6 @@ const quests = [
 
         bgmPlayer.addEventListener('error', (e) => {
             console.error('Audio load error:', e);
-            musicToggle.textContent = '❌ FILE NOT FOUND';
         });
     </script>
 </body>
