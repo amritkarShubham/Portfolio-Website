@@ -356,7 +356,6 @@
     <!-- Background Music -->
     <audio id="bgm-player" loop preload="auto">
         <source src="bgm.mp3" type="audio/mpeg">
-    
     </audio>
     <button id="music-toggle">🔊 MUSIC</button>
 
@@ -753,10 +752,27 @@ const quests = [
         // ===== MUSIC PLAYER =====
         const bgmPlayer = document.getElementById('bgm-player');
         const musicToggle = document.getElementById('music-toggle');
-        let isMusicPlaying = false;
+        let isMusicPlaying = true;
 
         // Set volume to 30%
         bgmPlayer.volume = 0.3;
+
+        // Auto-play music when site loads
+        window.addEventListener('load', () => {
+            const playPromise = bgmPlayer.play();
+            if (playPromise !== undefined) {
+                playPromise.then(() => {
+                    musicToggle.textContent = '🔊 MUSIC';
+                    musicToggle.classList.add('playing');
+                    isMusicPlaying = true;
+                    console.log('Background music started');
+                }).catch(err => {
+                    console.error('Autoplay failed:', err);
+                    musicToggle.textContent = '🔇 MUSIC';
+                    isMusicPlaying = false;
+                });
+            }
+        });
 
         musicToggle.addEventListener('click', () => {
             if (isMusicPlaying) {
