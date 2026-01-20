@@ -271,20 +271,39 @@
         }
 
         /* --- MUSIC PLAYER --- */
-        #music-toggle {
+        .pixel-speaker {
             background: none;
             border: none;
             cursor: pointer;
-            font-size: 1rem;
+            padding: 0.3rem;
             color: var(--primary);
-            transition: color 0.3s;
-            padding: 0;
+            transition: all 0.3s;
+            display: flex;
+            align-items: center;
+            justify-content: center;
             margin-left: 1rem;
+            width: 28px;
+            height: 28px;
         }
 
-        #music-toggle:hover {
+        .pixel-speaker:hover {
             color: var(--accent);
-            text-shadow: 0 0 8px rgba(253, 255, 182, 0.5);
+            filter: drop-shadow(0 0 6px rgba(253, 255, 182, 0.6));
+            transform: scale(1.1);
+        }
+
+        .pixel-speaker:active {
+            transform: scale(0.95);
+        }
+
+        .pixel-speaker.muted svg {
+            opacity: 0.5;
+        }
+
+        #speaker-icon {
+            stroke-linecap: round;
+            stroke-linejoin: round;
+            image-rendering: pixelated;
         }
 
         @keyframes glow { 0%, 100% { text-shadow: 2px 2px 0px #000, 0 0 5px var(--accent); } 50% { text-shadow: 2px 2px 0px #000, 0 0 15px var(--accent); } }
@@ -350,7 +369,13 @@
             <a href="#game">GAME</a>
             <a href="#about">ABOUT</a>
             <a href="#contact">CONTACT</a>
-            <button id="music-toggle" style="background: none; border: none; cursor: pointer; padding: 0; font-size: 1rem; color: var(--primary); transition: color 0.3s;">🔊</button>
+            <button id="music-toggle" class="pixel-speaker">
+                <svg id="speaker-icon" viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2">
+                    <polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"></polygon>
+                    <path d="M15 9c.7.7 1 1.6 1 2.5s-.3 1.8-1 2.5"></path>
+                    <path d="M19 5c1.4 1.4 2 3.2 2 5s-.6 3.6-2 5"></path>
+                </svg>
+            </button>
             </div>
     </nav>
 
@@ -768,14 +793,14 @@ const quests = [
             if (isMusicPlaying) {
                 bgmPlayer.pause();
                 bgmPlayer.muted = true;
-                musicToggle.textContent = '🔇';
+                musicToggle.classList.add('muted');
                 isMusicPlaying = false;
             } else {
                 bgmPlayer.muted = false;
                 bgmPlayer.play().catch(err => {
                     console.error('Audio playback failed:', err);
                 });
-                musicToggle.textContent = '🔊';
+                musicToggle.classList.remove('muted');
                 isMusicPlaying = true;
             }
         });
