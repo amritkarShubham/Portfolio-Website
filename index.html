@@ -354,7 +354,7 @@
     <div class="scanlines"></div>
 
     <!-- Background Music -->
-    <audio id="bgm-player" loop preload="auto">
+    <audio id="bgm-player" loop preload="auto" muted>
         <source src="bgm.mp3" type="audio/mpeg">
     </audio>
     <button id="music-toggle">🔊 MUSIC</button>
@@ -757,41 +757,42 @@ const quests = [
         // Set volume to 30%
         bgmPlayer.volume = 0.3;
 
-        // Auto-play music when site loads
-        window.addEventListener('load', () => {
-            const playPromise = bgmPlayer.play();
-            if (playPromise !== undefined) {
-                playPromise.then(() => {
-                    musicToggle.textContent = '🔊 MUSIC';
-                    musicToggle.classList.add('playing');
-                    isMusicPlaying = true;
-                    console.log('Background music started');
-                }).catch(err => {
-                    console.error('Autoplay failed:', err);
-                    musicToggle.textContent = '🔇 MUSIC';
-                    isMusicPlaying = false;
-                });
-            }
+        // Start playing muted (browsers allow this)
+        bgmPlayer.play().catch(err => {
+            console.log('Muted autoplay started');
         });
+
+        // Unmute on first user interaction
+        function unmuteMusic() {
+            if (bgmPlayer.muted) {
+                bgmPlayer.muted = false;
+                console.log('Music unmuted');
+                document.removeEventListener('click', unmuteMusic);
+                document.removeEventListener('keydown', unmuteMusic);
+                document.removeEventListener('touchstart', unmuteMusic);
+            }
+        }
+
+        document.addEventListener('click', unmuteMusic);
+        document.addEventListener('keydown', unmuteMusic);
+        document.addEventListener('touchstart', unmuteMusic);
 
         musicToggle.addEventListener('click', () => {
             if (isMusicPlaying) {
                 bgmPlayer.pause();
+                bgmPlayer.muted = true;
                 musicToggle.textContent = '🔇 MUSIC';
                 musicToggle.classList.remove('playing');
                 isMusicPlaying = false;
             } else {
-                const playPromise = bgmPlayer.play();
-                if (playPromise !== undefined) {
-                    playPromise.then(() => {
-                        musicToggle.textContent = '🔊 MUSIC';
-                        musicToggle.classList.add('playing');
-                        isMusicPlaying = true;
-                    }).catch(err => {
-                        console.error('Audio playback failed:', err);
-                        musicToggle.textContent = '❌ NO AUDIO';
-                    });
-                }
+                bgmPlayer.muted = false;
+                bgmPlayer.play().catch(err => {
+                    console.error('Audio playback failed:', err);
+                    musicToggle.textContent = '❌ NO AUDIO';
+                });
+                musicToggle.textContent = '🔊 MUSIC';
+                musicToggle.classList.add('playing');
+                isMusicPlaying = true;
             }
         });
 
