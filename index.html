@@ -354,9 +354,9 @@
     <div class="scanlines"></div>
 
     <!-- Background Music -->
-    <audio id="bgm-player" loop>
+    <audio id="bgm-player" loop preload="auto">
         <source src="bgm.mp3" type="audio/mpeg">
-        <source src="bgm.ogg" type="audio/ogg">
+    
     </audio>
     <button id="music-toggle">🔊 MUSIC</button>
 
@@ -755,8 +755,8 @@ const quests = [
         const musicToggle = document.getElementById('music-toggle');
         let isMusicPlaying = false;
 
-        // Try to auto-play with muted attribute as fallback
-        bgmPlayer.volume = 0.3; // Set volume to 30%
+        // Set volume to 30%
+        bgmPlayer.volume = 0.3;
 
         musicToggle.addEventListener('click', () => {
             if (isMusicPlaying) {
@@ -765,19 +765,36 @@ const quests = [
                 musicToggle.classList.remove('playing');
                 isMusicPlaying = false;
             } else {
-                bgmPlayer.play().catch(err => {
-                    console.log('Autoplay prevented or audio file not found:', err);
-                });
-                musicToggle.textContent = '🔊 MUSIC';
-                musicToggle.classList.add('playing');
-                isMusicPlaying = true;
+                const playPromise = bgmPlayer.play();
+                if (playPromise !== undefined) {
+                    playPromise.then(() => {
+                        musicToggle.textContent = '🔊 MUSIC';
+                        musicToggle.classList.add('playing');
+                        isMusicPlaying = true;
+                    }).catch(err => {
+                        console.error('Audio playback failed:', err);
+                        musicToggle.textContent = '❌ NO AUDIO';
+                    });
+                }
             }
         });
 
         // Handle audio end to ensure loop works
         bgmPlayer.addEventListener('ended', () => {
-            bgmPlayer.currentTime = 0;
-            bgmPlayer.play();
+            if (isMusicPlaying) {
+                bgmPlayer.currentTime = 0;
+                bgmPlayer.play();
+            }
+        });
+
+        // Check if audio can load
+        bgmPlayer.addEventListener('canplay', () => {
+            console.log('Audio loaded successfully');
+        });
+
+        bgmPlayer.addEventListener('error', (e) => {
+            console.error('Audio load error:', e);
+            musicToggle.textContent = '❌ FILE NOT FOUND';
         });
     </script>
 </body>
