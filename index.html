@@ -7,7 +7,7 @@
     <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&family=VT323&display=swap" rel="stylesheet">
     <style>
         :root {
-            /* Theme Colors - Feel free to change these! */
+            
             --bg-color: #2D232E;
             --text-color: #E0E0CE;
             --primary: #FFADAD;
@@ -33,7 +33,7 @@
             text-transform: uppercase;
         }
 
-        /* --- CRT Effect --- */
+       
         .scanlines {
             position: fixed; top: 0; left: 0; width: 100vw; height: 100vh;
             background: linear-gradient(to bottom, rgba(255,255,255,0), rgba(255,255,255,0) 50%, rgba(0,0,0,0.2) 50%, rgba(0,0,0,0.2));
@@ -41,7 +41,7 @@
             opacity: var(--scanline-opacity); animation: flicker 0.15s infinite;
         }
 
-        /* --- Nav --- */
+        
         nav {
             display: flex; justify-content: space-between; align-items: center;
             padding: 2rem; max-width: 1200px; margin: 0 auto;
@@ -57,7 +57,7 @@
             color: var(--accent); animation: blink 1s infinite;
         }
 
-        /* --- Hero --- */
+        
         .hero {
             min-height: 85vh; display: flex; flex-direction: column;
             justify-content: center; align-items: center; text-align: center;
@@ -65,7 +65,7 @@
             background: radial-gradient(circle at center, #4A3B4E 0%, var(--bg-color) 70%);
         }
         
-        /* CUSTOMIZED CSS FOR YOUR AVATAR */
+        
         .pixel-avatar {
             display: flex;
             justify-content: center;
@@ -75,19 +75,16 @@
         }
         
         .pixel-avatar img {
-            height: 195px; /* Passport size height */
-            width: 150px; /* Passport size width */
-            border: 4px solid var(--text-color); /* The retro border */
-            box-shadow: 8px 8px 0px #000; /* The retro shadow block */
-            object-fit: cover; /* Ensures image fills the space properly */
-            /* Optional: Makes the photo look slightly pixelated to match the theme */
-            /* image-rendering: pixelated; */ 
+            height: 195px; 
+            width: 150px; 
+            border: 4px solid var(--text-color); 
+            box-shadow: 8px 8px 0px #000; 
+            object-fit: cover;  
         }
 
         .hero h1 { font-size: 2.5rem; margin-bottom: 1.5rem; line-height: 1.4; text-shadow: 4px 4px 0px #000; }
         .hero p { font-size: 1.5rem; max-width: 600px; margin-bottom: 3rem; color: var(--secondary); }
 
-        /* --- Buttons --- */
         .pixel-btn {
             background-color: var(--secondary); color: #000; border: 4px solid #fff;
             padding: 1rem 2rem; font-size: 0.8rem; cursor: pointer;
@@ -98,7 +95,6 @@
         .pixel-btn:hover { background-color: var(--accent); transform: translateY(-2px); box-shadow: 8px 8px 0px #000; }
         .pixel-btn:active { transform: translate(4px, 4px); box-shadow: 2px 2px 0px #000; }
 
-        /* --- Projects (Static Version for easy use) --- */
         .projects { max-width: 1200px; margin: 4rem auto; padding: 0 2rem; }
         .section-title {
             font-size: 1.5rem; margin-bottom: 3rem; text-align: center;
@@ -130,7 +126,6 @@
         }
         .tag:hover { background: var(--primary); color: #000; }
 
-        /* --- Contact Section --- */
         .contact-section {
             max-width: 1200px; margin: 4rem auto; padding: 0 2rem; text-align: center;
         }
@@ -153,10 +148,8 @@
         .social-link:hover { background-color: var(--accent); transform: translateY(-3px); box-shadow: 8px 8px 0px #000; }
         .social-link:active { transform: translate(4px, 4px); box-shadow: 2px 2px 0px #000; }
 
-        /* --- Footer --- */
         footer { text-align: center; padding: 4rem 0; font-size: 1rem; opacity: 0.7; }
 
-        /* --- GAME SECTION --- */
         .game-section {
             max-width: 1200px; margin: 4rem auto; padding: 0 2rem; text-align: center;
         }
@@ -270,7 +263,6 @@
             color: #000;
         }
 
-        /* --- MUSIC PLAYER --- */
         .pixel-speaker {
             background: none;
             border: none;
@@ -357,7 +349,6 @@
 
     <div class="scanlines"></div>
 
-    <!-- Background Music -->
     <audio id="bgm-player" loop preload="auto" muted>
         <source src="bgm.mp3" type="audio/mpeg">
     </audio>
@@ -483,14 +474,11 @@
     </footer>
 
     <script>
-        // THIS SECTION IS FOR THE OPTIONAL BACKEND
-        // If you are just using the HTML file locally, this part won't load projects, 
-        // but the rest of the site will look correct.
+        
         async function loadQuests() {
             const grid = document.getElementById('quest-grid');
             try {
-                // This tries to connect to a backend server (like the Node.js one previously discussed)
-// We are manually putting the JSON here instead of fetching it
+                
 const quests = [
   {
     "id": 1,
@@ -527,7 +515,6 @@ const quests = [
                 });
             } catch (error) {
                 console.error("Error:", error);
-                // Default message if no backend is running
                 grid.innerHTML = '<p style="text-align:center; color: #FFADAD;">NO BACKEND DETECTED.<br>(Projects load from server)</p>';
             }
         }
@@ -542,13 +529,12 @@ const quests = [
 
         window.onload = loadQuests;
 
-        // ===== PIXEL QUEST GAME =====
+        
         const canvas = document.getElementById('game-canvas');
         const ctx = canvas.getContext('2d');
         const startBtn = document.getElementById('start-game-btn');
         const touchControls = document.getElementById('touch-controls');
         
-        // Responsive canvas
         function resizeCanvas() {
             const container = canvas.parentElement;
             const maxWidth = Math.min(400, container.clientWidth - 20);
@@ -571,13 +557,12 @@ const quests = [
         let gameOver = false;
         let nextDx = 1;
         let nextDy = 0;
-        let gameSpeed = 150; // Start slow: 150ms
-        let speedIncrement = 2; // Increase speed by 2ms per food collected
-        let minSpeed = 50; // Minimum speed: 50ms (fastest)
+        let gameSpeed = 100; 
+        let speedIncrement = 1; 
+        let minSpeed = 50; 
         
         document.getElementById('game-high-score').textContent = highScore;
         
-        // Show touch controls on mobile
         if (window.innerWidth <= 768) {
             touchControls.classList.add('show');
         }
@@ -590,11 +575,10 @@ const quests = [
         };
         
         function drawGame() {
-            // Clear canvas
+          
             ctx.fillStyle = '#000';
             ctx.fillRect(0, 0, canvas.width, canvas.height);
             
-            // Draw grid
             ctx.strokeStyle = colors.grid;
             ctx.lineWidth = 0.5;
             for (let i = 0; i <= tileCount; i++) {
@@ -609,14 +593,12 @@ const quests = [
                 ctx.stroke();
             }
             
-            // Draw food
             ctx.fillStyle = colors.food;
             ctx.shadowColor = colors.food;
             ctx.shadowBlur = 10;
             ctx.fillRect(food.x * gridSize + 2, food.y * gridSize + 2, gridSize - 4, gridSize - 4);
             ctx.shadowBlur = 0;
             
-            // Draw snake body
             snake.forEach((segment, index) => {
                 if (index === 0) {
                     ctx.fillStyle = colors.snakeHead;
@@ -639,13 +621,12 @@ const quests = [
             
             const head = {x: snake[0].x + dx, y: snake[0].y + dy};
             
-            // Check collisions with walls
+            
             if (head.x < 0 || head.x >= tileCount || head.y < 0 || head.y >= tileCount) {
                 endGame();
                 return;
             }
             
-            // Check collisions with self
             if (snake.some(segment => segment.x === head.x && segment.y === head.y)) {
                 endGame();
                 return;
@@ -653,18 +634,17 @@ const quests = [
             
             snake.unshift(head);
             
-            // Check if food is eaten
             if (head.x === food.x && head.y === food.y) {
                 score += 10;
                 document.getElementById('game-score').textContent = score;
-                // Increase speed as score goes up
+                
                 if (gameSpeed > minSpeed) {
                     gameSpeed = Math.max(minSpeed, gameSpeed - speedIncrement);
                 }
-                // Spawn food at new random position
+               
                 let newFoodX = Math.floor(Math.random() * tileCount);
                 let newFoodY = Math.floor(Math.random() * tileCount);
-                // Make sure food doesn't spawn on snake
+                
                 while (snake.some(segment => segment.x === newFoodX && segment.y === newFoodY)) {
                     newFoodX = Math.floor(Math.random() * tileCount);
                     newFoodY = Math.floor(Math.random() * tileCount);
@@ -690,8 +670,8 @@ const quests = [
             nextDx = 1;
             nextDy = 0;
             score = 0;
-            gameSpeed = 150; // Reset to starting speed
-            // Spawn food at random position
+            gameSpeed = 100; 
+            
             let newFoodX = Math.floor(Math.random() * tileCount);
             let newFoodY = Math.floor(Math.random() * tileCount);
             food = {x: newFoodX, y: newFoodY};
@@ -720,7 +700,6 @@ const quests = [
             }
         }
         
-        // Keyboard controls
         document.addEventListener('keydown', (e) => {
             if (!gameRunning) return;
             
@@ -748,7 +727,6 @@ const quests = [
             }
         });
         
-        // Touch controls
         document.getElementById('btn-up').addEventListener('click', () => { if (gameRunning && dy === 0) { nextDx = 0; nextDy = -1; } });
         document.getElementById('btn-down').addEventListener('click', () => { if (gameRunning && dy === 0) { nextDx = 0; nextDy = 1; } });
         document.getElementById('btn-left').addEventListener('click', () => { if (gameRunning && dx === 0) { nextDx = -1; nextDy = 0; } });
@@ -756,23 +734,18 @@ const quests = [
         
         startBtn.addEventListener('click', startGame);
         
-        // Initial draw
         drawGame();
 
-        // ===== MUSIC PLAYER =====
         const bgmPlayer = document.getElementById('bgm-player');
         const musicToggle = document.getElementById('music-toggle');
         let isMusicPlaying = true;
 
-        // Set volume to 30%
         bgmPlayer.volume = 0.3;
 
-        // Start playing muted (browsers allow this)
         bgmPlayer.play().catch(err => {
             console.log('Muted autoplay started');
         });
 
-        // Unmute on first user interaction
         function unmuteMusic() {
             if (bgmPlayer.muted) {
                 bgmPlayer.muted = false;
@@ -805,7 +778,6 @@ const quests = [
             }
         });
 
-        // Handle audio end to ensure loop works
         bgmPlayer.addEventListener('ended', () => {
             if (isMusicPlaying) {
                 bgmPlayer.currentTime = 0;
@@ -813,7 +785,6 @@ const quests = [
             }
         });
 
-        // Check if audio can load
         bgmPlayer.addEventListener('canplay', () => {
             console.log('Audio loaded successfully');
         });
@@ -824,3 +795,4 @@ const quests = [
     </script>
 </body>
 </html>
+
