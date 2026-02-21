@@ -343,6 +343,43 @@
             .touch-controls.show { display: grid; }
             footer { padding: 2rem 0; font-size: 0.8rem; }
         }
+            .music-widget {
+                position: fixed;
+                bottom: 20px;
+                left: 20px;
+                background: var(--box-bg);
+                border: 3px solid var(--secondary);
+                padding: 10px;
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+                gap: 8px;
+                z-index: 1000;
+                box-shadow: 6px 6px 0px #000;
+            }
+        .music-widget-label {
+                font-family: 'Press Start 2P', cursive;
+                font-size: 0.5rem;
+                color: var(--accent);
+        }
+
+        .music-widget .pixel-speaker {
+                margin-left: 0;
+                background: var(--bg-color);
+                border: 2px solid var(--text-color);
+                width: 40px;
+                height: 40px;
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                cursor: pointer;
+        }
+
+        .music-widget .pixel-speaker:hover {
+                background: var(--primary);
+                color: #000;
+        }
+        
     </style>
 </head>
 <body>
@@ -360,13 +397,6 @@
             <a href="#game">GAME</a>
             <a href="#about">ABOUT</a>
             <a href="#contact">CONTACT</a>
-            <button id="music-toggle" class="pixel-speaker">
-                <svg id="speaker-icon" viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2">
-                    <polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"></polygon>
-                    <path d="M15 9c.7.7 1 1.6 1 2.5s-.3 1.8-1 2.5"></path>
-                    <path d="M19 5c1.4 1.4 2 3.2 2 5s-.6 3.6-2 5"></path>
-                </svg>
-            </button>
             </div>
     </nav>
 
@@ -473,6 +503,17 @@
         <p style="margin-top: 10px; font-size: 0.8rem;">PRESS ANY KEY TO CONTINUE...</p>
     </footer>
 
+    <div class="music-widget">
+    <span class="music-widget-label">BGM: ON</span>
+    <button id="music-toggle" class="pixel-speaker">
+        <svg id="speaker-icon" viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="2">
+            <polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"></polygon>
+            <path d="M15 9c.7.7 1 1.6 1 2.5s-.3 1.8-1 2.5"></path>
+            <path d="M19 5c1.4 1.4 2 3.2 2 5s-.6 3.6-2 5"></path>
+        </svg>
+    </button>
+</div>
+    
     <script>
         
         async function loadQuests() {
@@ -795,4 +836,5 @@ const quests = [
     </script>
 </body>
 </html>
+
 
